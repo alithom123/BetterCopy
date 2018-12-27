@@ -19,7 +19,10 @@
     <link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/stylish-portfolio.min.css" rel="stylesheet">
+    <!-- I commented out the minified one so I can make changes. -->
+    <!-- <link href="css/stylish-portfolio.min.css" rel="stylesheet"> -->
+    <link href="css/stylish-portfolio.css" rel="stylesheet">
+
 
     <!-- Better Copy CSS -->
     <link href="css/bettercopy.css" rel="stylesheet">
@@ -63,23 +66,51 @@
           <em>Let's write some better copy</em>
         </h3>
 
-        <div class="form-group">
-            <!-- <label for="comment">Comment:</label> -->
-            <textarea class="form-control" rows="5" id="input"></textarea>
-        </div>
+        <!-- <div class="form-group"> -->
+            <!-- <textarea class="form-control" rows="5" id="input"></textarea> -->
+        <!-- </div> -->
 
-        <div id="buttons">
+        <!-- <div id="buttons"> -->
             <!-- Fill this with buttons using jquery -->
-        </div>
+        <!-- </div> -->
 
 
-        <div id="synonyms">
+        <!-- <div id="synonyms"> -->
             <!-- Fill this with synonyms table using jquery -->
-        </div>
+        <!-- </div> -->
 
 
       <div class="overlay"></div>
     </header>
+
+    <!-- Try having a separate div for all the copywriting. No background image,
+    simple colors, possilby replace the header with this. Maybe once they start
+    writing you can remove the title and all the stuff they don't need. -->
+
+    <div class="container text-center" id="input-section">
+        <!-- <div class="container text-center my-auto"> -->
+        <h1 class="pt-2 pb-2">Just start typing!</h1>
+        <h5 class="pb-2">
+            <em>We'll inspire you.</em>
+        </h5>
+
+          <div class="form-group">
+              <!-- <label for="comment">Comment:</label> -->
+              <textarea class="form-control" rows="5" id="input"></textarea>
+          </div>
+
+          <div id="buttons">
+              <!-- Fill this with buttons using jquery -->
+          </div>
+
+
+          <div id="synonyms">
+              <!-- Fill this with synonyms table using jquery -->
+          </div>
+
+
+        <!-- <div class="overlay"></div> ??? what was this for? was it mine or in template? -->
+    </div>
 
 
 

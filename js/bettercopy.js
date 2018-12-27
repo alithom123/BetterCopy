@@ -2,6 +2,8 @@ console.log("Running bettercopy.js.");
 
 var input = '';
 var wordsArray = new Array();
+var headerHidden = false;
+var currentTab = undefined;
 
 
 // Create an enumeration for all the different parts of speech eg. noun, adj.
@@ -57,6 +59,10 @@ function populateSynonyms(synonyms) {
                                 .attr("role","tab")
                                 .text(index);
 
+        anchorItem.on("click", function() {
+            // Need to add "active" class to the tabPane you created after this.
+        }
+
         tabItem.append(anchorItem);
         tabUnorderedList.append(tabItem);
     });
@@ -70,7 +76,7 @@ function populateSynonyms(synonyms) {
         console.log("What is 'this'?");
         console.log(this);
         tabContent = $("<div>").addClass("tab-content").attr("id",index + "TabContent");
-        // TODO: Need to somehow set the active tab to the first one.  
+        // TODO: Need to somehow set the active tab to the first one.
         var tabPane = $("<div>").addClass("tab-pane fade show active").attr("id",index + "TabPane").attr("role","tabpanel");
         var table = $("<table>").addClass("table table-striped table-bordered table-hover table-sm").attr("id",index + "Table");
         // var table = $("<thead>").addClass("table table-striped table-bordered table-hover table-sm");
@@ -268,6 +274,12 @@ $(document).ready(function(){
     // Every time new text is entered into the textbox parse into buttons.
     $('#input').on('input change paste', function() {
 
+        // Once they start typing remove all the fluff.  The header.
+        if(!headerHidden) {
+            hideHeader();
+        }
+
+
         // Declare variables here?
         // var input = "";
         // var wordsArray = new Array();
@@ -310,7 +322,7 @@ $(document).ready(function(){
             // });
             $('#buttons').append(wordButton);
             // $('#buttons').append("<button type=button class=\"btn btn-primary word-button\" onclick=\"findSynonyms(" + this + ")\">" + this + "</button>");
-            $()
+            // $()
         });
 
 
@@ -321,7 +333,32 @@ $(document).ready(function(){
 
 });
 
+function hideHeader() {
+    console.log("Running hideHeader.");
+    console.log("header = ");
+    console.log($("header"));
 
+    // Hide the header.
+    $("header").attr("style","display: none !important"); /* This is hacky but works
+    whereas the methods below didn't because there's some styling with importants
+    already being used */
+    // $("header").hide();
+    // $("header").hide();
+    // $("header").css( "display", "none");
+    // $("header").toggle();
+
+    headerHidden = true;
+}
+
+function showHeader() {
+    console.log("Running showHeader.");
+    $("header").attr("style","display: block !important"); /* This is hacky but works */
+    headerHidden = false;
+}
+
+function tabClicked() {
+
+}
 // Try this instead
 
 // $.ajax({
