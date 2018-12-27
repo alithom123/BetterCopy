@@ -1,0 +1,16 @@
+1. Words like "it's" are being parsed as two words.
+2. Designate an area for synonyms to display, when they click anywhere within a
+word, use that word to populate synonyms.
+3. Could maybe use iframe to just bring in thesaurus.com page of each word.
+4. I think everything's linked in twice. Once in head and once at the end of body.  Link only once.
+-- UPDATE: Actually just the css is included in head and js in included at end of body which kinda makes sense.
+You want page to first appear properly, not have elements show up and then a second later be style properly.
+5. Figure out all the different types of words there are & their abbreviation.:
+nouns: 'noun'
+adjective: 'adj'
+adverb: 'adv'
+pronoun: 'pron'
+preposition: 'prep'
+conjuction: 'conjuction'
+determiner: ??? Can't find one.
+exclamation: ??? Can't find one.
