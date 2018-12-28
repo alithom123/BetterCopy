@@ -4,6 +4,7 @@ var input = '';
 var wordsArray = new Array();
 var headerHidden = false;
 var currentTab = undefined;
+var maxWordsInRow = 12;
 
 
 // Create an enumeration for all the different parts of speech eg. noun, adj.
@@ -26,6 +27,7 @@ let apiKey="32657501f1431228fdde18cf2c61bd16";
 let apiBaseUrl = "http://words.bighugelabs.com/api";
 
 function findSynonyms(word) {
+    console.log("Running findSynonyms(" + word + ")");
 
     // Clean out the old table & tabs. They are separate.
     // console.log("try to remove tabContent:");
@@ -33,7 +35,7 @@ function findSynonyms(word) {
     $("#tabContent").remove();
     $("#synonymTabs").remove();
 
-    console.log("Running findSynonyms(" + word + ")");
+
     var format = "json";
     var apiURL = apiBaseUrl + "/" + apiVersion + "/" + apiKey + "/" + word + "/" + format;
     console.log("url =" + apiURL);
@@ -54,24 +56,50 @@ function populateSynonyms(synonyms) {
     // Build the tabContent, tabPanes, tables.
     // var tabContent = $("<div>").addClass("tab-content").attr("id",index + "TabContent");
     var tabContent = $("<div>").addClass("tab-content").attr("id","tabContent");
+    var firstIteration = true;
+    var firstTab;
     $.each(synonyms, function(index, value) {
         // This loop builds the tables inside each tab.
         console.log("in synonyms each.");
         console.log("index = " + index);
-        console.log(value);
+        console.log("value = " + value);
         console.log("What is 'this'?");
         console.log(this);
 
         // TODO: Need to somehow set the active tab to the first one.
         var tabPane = $("<div>").addClass("tab-pane fade show").attr("id",index + "TabPane").attr("role","tabpanel");
+        if(firstIteration) {
+                tabPane.addClass("active");
+                firstIteration = false;
+                firstTab = index;
+        }
         var table = $("<table>").addClass("table table-striped table-bordered table-hover table-sm").attr("id",index + "Table");
         // var table = $("<thead>").addClass("table table-striped table-bordered table-hover table-sm");
         var tbody = $("<tbody>").attr("id",index + "TableBody");
+
+        var row = 0;
+        var col = 0;
+        var tr;
+        var numSynonyms = this.syn.length;
         $.each(this.syn, function(wordIndex,wordValue){
             console.log("in each word loop = " + wordValue);
-            var tr = $("<tr>").attr("id", wordValue + "Tr");
+            console.log("What is 'this' now?");
+            console.log(this);
+
+            if(col === 0) {
+                tr = $("<tr>").attr("id", "tr" + row);
+            }
+
             var td = $("<td>").text(wordValue);
-            tbody.append(tr.append(td));
+            tr.append(td);
+            // tbody.append(tr.append(td));
+
+            col = ( col+1 ) % maxWordsInRow;
+            // If this word completes the row or is the end of the words, then add row to body.
+            if(col === 0 || row * maxWordsInRow + col === numSynonyms ) {
+                tbody.append(tr);
+                row++;
+            }
         });
 
         tabContent.append(tabPane.append(table.append(tbody)));
@@ -93,6 +121,10 @@ function populateSynonyms(synonyms) {
                                     .attr("href","#"+index)
                                     .attr("role","tab")
                                     .text(index);
+
+            if(index === firstTab ) {
+                anchorItem.addClass("active");
+            }
 
             anchorItem.on("click", function() {
                 console.log("Received the tab click");
@@ -117,38 +149,31 @@ function populateSynonyms(synonyms) {
 
 
 $(document).ready(function(){
-
     console.log("in document ready.");
 
 
     // Every time new text is entered into the textbox parse into buttons.
-    $('#input').on('input change paste', function() {
+    // $('#input').on('input change paste', function() {
+    $('#input').on('input', function() {
+        console.log('on input change paste');
 
         // Once they start typing remove all the fluff.  The header.
         if(!headerHidden) {
             hideHeader();
         }
 
-
-        // Declare variables here?
-        // var input = "";
-        // var wordsArray = new Array();
-
         // Parse text into words.
-        console.log("event happened!");
         var input = $('#input').val();
-        console.log("input = " + input);
 
         // Break input into words array.
         wordsArray = input.match(/\b(\w+)\b/g);
-        console.log("wordsArray = " + wordsArray);
 
         // Empty buttons before replacing them.
         $('.word-button').remove();
 
         // Create button for every word and put in <div id="buttons">.
         $(wordsArray).each(function(index, value) {
-            console.log( index + ": " + value);
+            // console.log( index + ": " + value);
 //             var inputElement = document.createElement('input');
 // inputElement.type = "button"
 // inputElement.addEventListener('click', function(){
@@ -160,17 +185,26 @@ $(document).ready(function(){
             // wordButton.type = "button";
             // wordButton.class =
             var wordButton = $("<button>")
+                // .click(function() {
+                //     var synonyms = findSynonyms(value);
+                // })
                 .addClass("word-button btn btn-primary")
-                .click(function() {
-                    var synonyms = findSynonyms(value);
-                    // populateSynonyms(synonyms);
-                })
                 .append("<span>")
-                    .text(value);
+                .text(value);
+
+
+
             // wordButton.addEventListener('click', function() {
             //     findSynonyms(this);
             // });
-            $('#buttons').append(wordButton);
+            $("#buttons").append(wordButton);
+            // Adding events to dynamically created events is a bit weird.
+            // $("body").on("click",".word-button", function() {
+            wordButton.on("click", function() {
+                // console.log("simple demo of word button click handler.");
+                    var synonyms = findSynonyms(value);
+            });
+            // console.log( wordButton.data('events') );
             // $('#buttons').append("<button type=button class=\"btn btn-primary word-button\" onclick=\"findSynonyms(" + this + ")\">" + this + "</button>");
             // $()
         });
