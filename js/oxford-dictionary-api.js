@@ -53,18 +53,22 @@ function findSynonymsOxfordDictionaryApi(word) {
 
     $.ajax({
         // var settings = {
-            "async": true,
-            "crossDomain": true,
-            "url": "https://od-api.oxforddictionaries.com/api/v1/entries/en/pretty/synonyms",
-            "method": "GET",
-            "headers": {
+
+        /* This came from Postman app sample code which seems pretty legit.  Must be about 
+        doing it from client-side. */
+            async: true,
+            crossDomain: true,
+            url: "https://od-api.oxforddictionaries.com/api/v1/entries/en/pretty/synonyms",
+            method: "GET",
+            headers: {
               "app_id": "363a9ae7",
               "app_key": "57d756fb96d16375430f1a1aad3e7051",
               "Content-Type": "application/x-www-form-urlencoded",
               "cache-control": "no-cache",
               "Postman-Token": "6579f00d-d8c5-444f-84cb-fa2828102b23"
             },
-            "data": "",
+            data: "",
+            xhrFields: { withCredentials: true },
         //   }
           
         //   $.ajax(settings).done(function (response) {
