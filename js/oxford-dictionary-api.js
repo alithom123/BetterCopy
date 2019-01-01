@@ -52,8 +52,26 @@ function findSynonymsOxfordDictionaryApi(word) {
     }
 
     $.ajax({
-        type: "GET",
-        url: apiUrl,
+        // var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://od-api.oxforddictionaries.com/api/v1/entries/en/pretty/synonyms",
+            "method": "GET",
+            "headers": {
+              "app_id": "363a9ae7",
+              "app_key": "57d756fb96d16375430f1a1aad3e7051",
+              "Content-Type": "application/x-www-form-urlencoded",
+              "cache-control": "no-cache",
+              "Postman-Token": "6579f00d-d8c5-444f-84cb-fa2828102b23"
+            },
+            "data": "",
+        //   }
+          
+        //   $.ajax(settings).done(function (response) {
+        //     console.log(response);
+        //   });
+        // type: "GET",
+        // url: apiUrl,
         // dataType: 'json',
         // data: authData,
         // async: false,
@@ -70,19 +88,20 @@ function findSynonymsOxfordDictionaryApi(word) {
             // "app_key": "57d756fb96d16375430f1a1aad3e7051"
             // },
 
-        headers: {
-            "Accept": "application/json",
-            "app_id": "363a9ae7",
-            "app_key": "57d756fb96d16375430f1a1aad3e7051"
-        },
+        // headers: {
+        //     "Accept": "application/json",
+        //     "app_id": "363a9ae7",
+        //     "app_key": "57d756fb96d16375430f1a1aad3e7051"
+        // },
         //     "app_id": "363a9ae7",
         //     "app_key": "57d756fb96d16375430f1a1aad3e7051"
         // },
         /* The below is changing the pre-flight request which I don't think is what we want */
         // beforeSend: function(request) {
             // request.setRequestHeader("Authorization", 'key="mykey"');
-            // request.setRequestHeader("Authorization", 'app_id="363a9ae7"');
-            // request.setRequestHeader("Authorization", 'app_key="57d756fb96d16375430f1a1aad3e7051"');
+        //     request.setRequestHeader("app_id", "363a9ae7");
+        //     request.setRequestHeader("app_key", "57d756fb96d16375430f1a1aad3e7051");
+        // },
             //     app_id: 363a9ae7
     // app_key: 57d756fb96d16375430f1a1aad3e7051
             // request.setRequestHeader("app_id", appId);
