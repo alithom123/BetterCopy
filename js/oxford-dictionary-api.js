@@ -55,14 +55,32 @@ function findSynonymsOxfordDictionaryApi(word) {
         type: "GET",
         url: apiUrl,
         dataType: 'json',
-        data: authData,
+        // data: authData,
         async: false,
+        headers:
+        // r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
+            // {
+            //     'Origin': "https://alithom123.github.io/BetterCopy/",
+            //     'app_id': appId,
+            //     'app_key': appKey
+            // },
+            {
+            "Accept": "application/json",
+            "app_id": "363a9ae7",
+            "app_key": "57d756fb96d16375430f1a1aad3e7051"
+            },
+
         // headers: {
         // },
         /* The below is changing the pre-flight request which I don't think is what we want */
         // beforeSend: function(request) {
-        //     request.setRequestHeader("app_id", appId);
-        //     request.setRequestHeader("app_key", appKey);
+            // request.setRequestHeader("Authorization", 'key="mykey"');
+            // request.setRequestHeader("Authorization", 'app_id="363a9ae7"');
+            // request.setRequestHeader("Authorization", 'app_key="57d756fb96d16375430f1a1aad3e7051"');
+            //     app_id: 363a9ae7
+    // app_key: 57d756fb96d16375430f1a1aad3e7051
+            // request.setRequestHeader("app_id", appId);
+            // request.setRequestHeader("app_key", appKey);
         // },
         success: function(msg) {
             console.log("Success on api call with msg: " + msg);
