@@ -1,10 +1,21 @@
 console.log("Running bettercopy.js.");
+testImport();
+
+
+// Let's try loading some imports. We can just do it in the HTML if not.
+// import * as oxfordApi from 'oxford-dictionary-api'
+// import { testImport,findSynonymsOxfordDictionaryApi  } from 'oxford-dictionary-api';
 
 var input = '';
 var wordsArray = new Array();
 var headerHidden = false;
 var currentTab = undefined;
 var maxWordsInRow = 12;
+
+// if(!headerHidden) {
+    hideHeader();
+// }
+
 
 
 // Create an enumeration for all the different parts of speech eg. noun, adj.
@@ -19,35 +30,6 @@ const partOfSpeech = Object.freeze({
     exclamation: Symbol("exclamation"),
 });
 
-// "http://words.bighugelabs.com/api/{version}/{api key}/{word}/{format}"
-// JSON
-// http://words.bighugelabs.com/api/2/32657501f1431228fdde18cf2c61bd16/word/json
-let apiVersion="2";
-let apiKey="32657501f1431228fdde18cf2c61bd16";
-let apiBaseUrl = "http://words.bighugelabs.com/api";
-
-function findSynonyms(word) {
-    console.log("Running findSynonyms(" + word + ")");
-
-    // Clean out the old table & tabs. They are separate.
-    // console.log("try to remove tabContent:");
-    // console.log($("#tabContent"));
-    $("#tabContent").remove();
-    $("#synonymTabs").remove();
-
-
-    var format = "json";
-    var apiURL = apiBaseUrl + "/" + apiVersion + "/" + apiKey + "/" + word + "/" + format;
-    console.log("url =" + apiURL);
-    var tableOfSynonyms = null;
-
-    $.getJSON(apiURL, function(result){
-        console.log("Synonyms returned:");
-        console.log(result);
-        populateSynonyms(result);
-        return result;
-    });
-}
 
 function populateSynonyms(synonyms) {
     console.log("Running populateSynonyms");
@@ -158,9 +140,9 @@ $(document).ready(function(){
         console.log('on input change paste');
 
         // Once they start typing remove all the fluff.  The header.
-        if(!headerHidden) {
-            hideHeader();
-        }
+        // if(!headerHidden) {
+        //     hideHeader();
+        // }
 
         // Parse text into words.
         var input = $('#input').val();
@@ -202,7 +184,7 @@ $(document).ready(function(){
             // $("body").on("click",".word-button", function() {
             wordButton.on("click", function() {
                 // console.log("simple demo of word button click handler.");
-                    var synonyms = findSynonyms(value);
+                    var synonyms = findSynonymsOxfordDictionaryApi(value);
             });
             // console.log( wordButton.data('events') );
             // $('#buttons').append("<button type=button class=\"btn btn-primary word-button\" onclick=\"findSynonyms(" + this + ")\">" + this + "</button>");
