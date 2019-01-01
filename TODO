@@ -25,3 +25,5 @@ figure out how to use Roget's which is what thesaurus.com seems to be using but
 seems like you have to run some java or something which looks complicated but at
 least it'll run on your own machine? But not sure you can make that work to run
 on a browser. Possibly wordnet? https://wordnet.princeton.edu/
+9. ** Move api's into their own files.  It's just confusing things. Maybe you can
+make a template function/protocol, whatever they call it in javascript 
