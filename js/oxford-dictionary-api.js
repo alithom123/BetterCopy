@@ -54,21 +54,21 @@ function findSynonymsOxfordDictionaryApi(word) {
     $.ajax({
         type: "GET",
         url: apiUrl,
-        dataType: 'json',
+        // dataType: 'json',
         // data: authData,
         async: false,
-        headers:
+        // headers:
         // r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
             // {
             //     'Origin': "https://alithom123.github.io/BetterCopy/",
             //     'app_id': appId,
             //     'app_key': appKey
             // },
-            {
-            "Accept": "application/json",
-            "app_id": "363a9ae7",
-            "app_key": "57d756fb96d16375430f1a1aad3e7051"
-            },
+            // {
+            // "Accept": "application/json",
+            // "app_id": "363a9ae7",
+            // "app_key": "57d756fb96d16375430f1a1aad3e7051"
+            // },
 
         // headers: {
         // },
