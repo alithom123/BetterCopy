@@ -56,7 +56,7 @@ function findSynonymsOxfordDictionaryApi(word) {
         url: apiUrl,
         // dataType: 'json',
         // data: authData,
-        async: false,
+        // async: false,
         // headers:
         // r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
             // {
@@ -70,7 +70,13 @@ function findSynonymsOxfordDictionaryApi(word) {
             // "app_key": "57d756fb96d16375430f1a1aad3e7051"
             // },
 
-        // headers: {
+        headers: {
+            "Accept": "application/json",
+            "app_id": "363a9ae7",
+            "app_key": "57d756fb96d16375430f1a1aad3e7051"
+        },
+        //     "app_id": "363a9ae7",
+        //     "app_key": "57d756fb96d16375430f1a1aad3e7051"
         // },
         /* The below is changing the pre-flight request which I don't think is what we want */
         // beforeSend: function(request) {
