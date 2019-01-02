@@ -65,7 +65,8 @@ function findSynonymsOxfordDictionaryApi(word) {
               "app_key": "57d756fb96d16375430f1a1aad3e7051",
               "Content-Type": "application/x-www-form-urlencoded",
               "cache-control": "no-cache",
-              "Postman-Token": "6579f00d-d8c5-444f-84cb-fa2828102b23"
+              "Postman-Token": "6579f00d-d8c5-444f-84cb-fa2828102b23",
+              "Access-Control-Allow-Origin": "*" // added by me.
             },
             data: "",
             xhrFields: { withCredentials: true },
@@ -113,7 +114,14 @@ function findSynonymsOxfordDictionaryApi(word) {
         // },
         success: function(msg) {
             console.log("Success on api call with msg: " + msg);
+        },
+        error: function(xhr,status,errorThrown) {
+            console.log("Here comes ajax error:");
+            console.log(status);
+            console.log(xhr);
+            console.log(errorThrown);
         }
+        //onfailure?
     });
     // $.ajax
 //   ({

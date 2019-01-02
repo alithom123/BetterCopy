@@ -31,39 +31,44 @@ const partOfSpeech = Object.freeze({
 });
 
 
-function populateSynonyms(synonyms) {
+function populateSynonyms(word, standardizedData) {
     console.log("Running populateSynonyms");
-    console.log(synonyms);
+    console.log(standardizedData);
 
     // Build the tabContent, tabPanes, tables.
     // var tabContent = $("<div>").addClass("tab-content").attr("id",index + "TabContent");
     var tabContent = $("<div>").addClass("tab-content").attr("id","tabContent");
-    var firstIteration = true;
+
     var firstTab;
-    $.each(synonyms, function(index, value) {
+    $.each(standardizedData, function(index, value) {
         // This loop builds the tables inside each tab.
         console.log("in synonyms each.");
-        console.log("index = " + index);
-        console.log("value = " + value);
+        console.log("index = ");
+        console.log(index);
+        console.log("value = ");
+        console.log(value);
         console.log("What is 'this'?");
         console.log(this);
 
         // TODO: Need to somehow set the active tab to the first one.
-        var tabPane = $("<div>").addClass("tab-pane fade show").attr("id",index + "TabPane").attr("role","tabpanel");
-        if(firstIteration) {
-                tabPane.addClass("active");
-                firstIteration = false;
-                firstTab = index;
+        var tabPane;
+        if(index === 0) {
+            tabPane = $("<div>").addClass("tab-pane fade show active").attr("id",index + "TabPane").attr("role","tabpanel");
+        } else {
+            tabPane = $("<div>").addClass("tab-pane fade show").attr("id",index + "TabPane").attr("role","tabpanel");
         }
+
         var table = $("<table>").addClass("table table-striped table-bordered table-hover table-sm").attr("id",index + "Table");
+        
         // var table = $("<thead>").addClass("table table-striped table-bordered table-hover table-sm");
+        
         var tbody = $("<tbody>").attr("id",index + "TableBody");
 
         var row = 0;
         var col = 0;
         var tr;
-        var numSynonyms = this.syn.length;
-        $.each(this.syn, function(wordIndex,wordValue){
+        var numSynonyms = value.synonyms.length;
+        $.each(value.synonyms, function(wordIndex, wordValue){
             console.log("in each word loop = " + wordValue);
             console.log("What is 'this' now?");
             console.log(this);
@@ -91,20 +96,22 @@ function populateSynonyms(synonyms) {
 
     // Create the tabs.
     var tabUnorderedList = $('<ul>').addClass("nav nav-tabs").attr("id","synonymTabs").attr("role","tablist");
-    $.each(synonyms, function(index, value) {
+
+    $.each(standardizedData, function(index, value) {
             // This loop builds the tabs.
             console.log("in tab each.");
             console.log("index = " + index);
             console.log(value);
+            var tabTitle = value.partOfSpeech + "; " + value.synonyms[0];
             var tabItem = $('<li>').addClass("nav-item");
             var anchorItem = $('<a>').addClass("nav-link")
                                     .attr("id",index)
                                     .attr("data-toggle","tab")
                                     .attr("href","#"+index)
                                     .attr("role","tab")
-                                    .text(index);
+                                    .text(tabTitle);
 
-            if(index === firstTab ) {
+            if(index === 0 ) {
                 anchorItem.addClass("active");
             }
 
@@ -123,6 +130,7 @@ function populateSynonyms(synonyms) {
             tabUnorderedList.append(tabItem);
         });
 
+    $("#synonyms").empty();
     $("#synonyms").append(tabUnorderedList);
     $("#synonyms").append(tabContent);
     console.log("tabUnorderedList:");console.log(tabUnorderedList);
@@ -183,8 +191,15 @@ $(document).ready(function(){
             // Adding events to dynamically created events is a bit weird.
             // $("body").on("click",".word-button", function() {
             wordButton.on("click", function() {
-                // console.log("simple demo of word button click handler.");
-                    var synonyms = findSynonymsOxfordDictionaryApi(value);
+                console.log("simple demo of word button click handler.");
+                    // var synonyms = findSynonymsOxfordDictionaryApi(value);
+                    var queryResult = findSynonymsMerriamWebsterDictionaryApi(value, populateSynonyms); // returns results or false.
+                    
+                    // if(queryResult) {
+                    //     var standardizedSynonyms = standardizeSynonyms(queryResult);
+                    //     populateSynonyms(standardizedSynonyms);
+                    // }
+
             });
             // console.log( wordButton.data('events') );
             // $('#buttons').append("<button type=button class=\"btn btn-primary word-button\" onclick=\"findSynonyms(" + this + ")\">" + this + "</button>");
@@ -192,6 +207,10 @@ $(document).ready(function(){
         });
     });
 });
+
+// function standardizeData(queryResults) {
+    
+// }
 
 function hideHeader() {
     console.log("Running hideHeader.");
